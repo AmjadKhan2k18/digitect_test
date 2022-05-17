@@ -1,4 +1,5 @@
 import 'package:digitect/utils/share_preferences_util.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LocaleController extends GetxController {
@@ -18,6 +19,7 @@ class LocaleController extends GetxController {
     final tempList = localeString.split('_');
     local = tempList[0].obs;
     countryCode = tempList[1].obs;
+    Get.updateLocale(Locale(local!.value, countryCode!.value));
 
     if (localeString == 'ar_SA') {
       changeLanguageIndex(0, firstTime: true);
