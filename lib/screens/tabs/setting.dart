@@ -3,9 +3,14 @@ import 'package:digitect/controllers/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SettingScreen extends StatelessWidget {
+class SettingScreen extends StatefulWidget {
   const SettingScreen({Key? key}) : super(key: key);
 
+  @override
+  State<SettingScreen> createState() => _SettingScreenState();
+}
+
+class _SettingScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     final themeController = Get.put(ThemeController(), permanent: false);
@@ -18,10 +23,14 @@ class SettingScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('darkTheme'.tr),
-              Switch(
-                value: themeController.isDarkTheme!.value,
-                onChanged: (value) => themeController.setDarkTheme(value),
-              ),
+              Obx(
+                () => Switch(
+                  value: themeController.isDarkTheme!.value,
+                  onChanged: (value) => setState(() {
+                    themeController.setDarkTheme(value);
+                  }),
+                ),
+              )
             ],
           ),
           const SizedBox(height: 20),
@@ -33,18 +42,6 @@ class SettingScreen extends StatelessWidget {
 }
 
 class _HorizontalToggle extends StatefulWidget {
-  // final String label;
-  // final int selectedIndex;
-  // final Function(int) onChanged;
-  // final List<String> options;
-
-  // const _HorizontalToggle({
-  //   required this.label,
-  //   required this.selectedIndex,
-  //   required this.onChanged,
-  //   required this.options,
-  // });
-
   @override
   State<_HorizontalToggle> createState() => _HorizontalToggleState();
 }
@@ -54,7 +51,6 @@ class _HorizontalToggleState extends State<_HorizontalToggle> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -72,7 +68,9 @@ class _HorizontalToggleState extends State<_HorizontalToggle> {
         ),
         const SizedBox(height: 15),
         Obx(() => ToggleButtons(
-              onPressed: localController.changeLanguageIndex,
+              onPressed: (index) => setState(
+                () => localController.changeLanguageIndex(index),
+              ),
               children: const [
                 Padding(
                   padding: EdgeInsets.all(10),

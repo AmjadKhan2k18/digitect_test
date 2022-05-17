@@ -1,3 +1,4 @@
+import 'package:digitect/utils/our_theme.dart';
 import 'package:digitect/utils/share_preferences_util.dart';
 import 'package:get/get.dart';
 
@@ -13,7 +14,8 @@ class ThemeController extends GetxController {
   }
 
   setDarkTheme(bool newValue) async {
-    await SharePreferenceUtil.setBool('isDarkTheme', newValue);
+    Get.changeTheme(newValue ? OurTheme.darkTheme : OurTheme.lightTheme);
     isDarkTheme = newValue.obs;
+    await SharePreferenceUtil.setBool('isDarkTheme', newValue);
   }
 }
